@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  font-family: Roboto, sans-serif;
+  box-sizing: border-box;
+  border: 0;
+  outline: 0;
+}
+
+body {
+  height: 100vh;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  row-gap: 10px;
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 2;
+}
+
+form fieldset {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+}
+
+form fieldset hr {
+  border: 1px solid white;
+  margin: 15px 0;
+}
+
+form fieldset fieldset {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+}
+
+form fieldset fieldset p {
+  font-size: 1.5rem;
+  margin-bottom: -10px;
+}
+
+form fieldset label {
+  font-weight: 300;
+  color: white;
+  font-size: large;
+}
+
+form fieldset label:not(:first-child) {
+  margin-top: 15px;
+}
+
+form fieldset input {
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+form fieldset input[type=number] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
+
+form fieldset input::-webkit-outer-spin-button,
+form fieldset input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+form fieldset input:not(:first-child) {
+  margin-bottom: 5px;
+}
+
+form button {
+  padding: 5px 25px;
+  margin-left: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-radius: 5px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
