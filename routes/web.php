@@ -52,6 +52,7 @@ Route::post('/', function (Request $request) {
     $dbData['searched_cities'] =
         $data['first_city_name'] . ',' . $data['second_city_name'];
 
+    $dbData['searched_cities'] = htmlspecialchars($dbData['searched_cities']);
     $dbData['visitor'] = $_SERVER['REMOTE_ADDR'];
 
     $origLat1 = $data['first_city_latitude'];

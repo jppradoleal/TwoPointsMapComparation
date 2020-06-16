@@ -19283,13 +19283,13 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var inputs = document.querySelectorAll("input");
-var cityNames = document.getElementsByClassName("cityName");
+var inputs = document.querySelectorAll('input');
+var cityNames = document.getElementsByClassName('cityName');
 var platform = new H.service.Platform({
-  apikey: "24KZioKxe2yeiTg5a9fbHY3gMizMQXSc-dnoBsFvl3E"
+  apikey: '24KZioKxe2yeiTg5a9fbHY3gMizMQXSc-dnoBsFvl3E'
 });
 var defaultLayers = platform.createDefaultLayers();
-var map = new H.Map(document.getElementById("map"), defaultLayers.vector.normal.map, {
+var map = new H.Map(document.getElementById('map'), defaultLayers.vector.normal.map, {
   zoom: 1,
   center: {
     lat: inputs[2].value || -23.55152682009365,
@@ -19311,11 +19311,39 @@ var markers = [new H.map.Marker({
 markers.forEach(function (v) {
   map.addObject(v);
 });
-map.addEventListener("tap", function (e) {
+var linestring = new H.geo.LineString();
+linestring.pushPoint({
+  lat: inputs[2].value,
+  lng: inputs[3].value
+} || map.getCenter());
+linestring.pushPoint({
+  lat: inputs[5].value,
+  lng: inputs[6].value
+} || map.getCenter());
+var polyline = new H.map.Polyline(linestring, {
+  style: {
+    lineWidth: 10
+  }
+});
+map.addObject(polyline);
+
+if (Object.values(inputs).every(function (v) {
+  return v.value.length > 0;
+})) {
+  map.getViewModel().setLookAtData({
+    bounds: polyline.getBoundingBox()
+  });
+}
+
+map.addEventListener('tap', function (e) {
   var coords = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
   currentClick = (currentClick + 1) % 2;
   markers[currentClick].setGeometry(coords);
   map.addObject(markers[currentClick]);
+  linestring.pushPoint(coords);
+  linestring.removePoint(0);
+  polyline.setGeometry(linestring);
+  map.addObject(polyline);
 
   if (currentClick == 0) {
     inputs[2].value = coords.lat;
@@ -19328,7 +19356,7 @@ map.addEventListener("tap", function (e) {
   service.reverseGeocode({
     at: "".concat(coords.lat, ",").concat(coords.lng)
   }, function (result) {
-    cityNames[currentClick].value = result.items[0].address.city || result.items.title.split(",")[0];
+    cityNames[currentClick].value = result.items[0].address.city || result.items.title.split(',')[0];
   });
 });
 
