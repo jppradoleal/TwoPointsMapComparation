@@ -1,43 +1,44 @@
 require("./bootstrap");
+const inputs = document.querySelectorAll("input");
+const cityNames = document.getElementsByClassName("cityName");
 
-var platform = new H.service.Platform({
+const platform = new H.service.Platform({
     apikey: "24KZioKxe2yeiTg5a9fbHY3gMizMQXSc-dnoBsFvl3E",
 });
 
-var defaultLayers = platform.createDefaultLayers();
+const defaultLayers = platform.createDefaultLayers();
 
-var map = new H.Map(
+const map = new H.Map(
     document.getElementById("map"),
     defaultLayers.vector.normal.map,
     {
-        zoom: 10,
-        center: { lat: -23.55152682009365, lng: -46.62598755364678 },
+        zoom: 1,
+        center: {
+            lat: inputs[2].value || -23.55152682009365,
+            lng: inputs[3].value || -46.62598755364678,
+        },
     }
 );
 
-var ui = H.ui.UI.createDefault(map, defaultLayers);
-var mapEvents = new H.mapevents.MapEvents(map);
-var behavior = new H.mapevents.Behavior(mapEvents);
-var service = platform.getSearchService();
-
-var inputs = document.querySelectorAll("input");
-var currentClick = 1;
-var markers = [
+const ui = H.ui.UI.createDefault(map, defaultLayers);
+const mapEvents = new H.mapevents.MapEvents(map);
+const behavior = new H.mapevents.Behavior(mapEvents);
+const service = platform.getSearchService();
+let currentClick = 1;
+const markers = [
     new H.map.Marker(
-        { lat: inputs[1].value, lng: inputs[2].value } || map.getCenter()
+        { lat: inputs[2].value, lng: inputs[3].value } || map.getCenter()
     ),
     new H.map.Marker(
-        { lat: inputs[3].value, lng: inputs[4].value } || map.getCenter()
+        { lat: inputs[5].value, lng: inputs[6].value } || map.getCenter()
     ),
 ];
 
 markers.forEach((v) => {
     map.addObject(v);
 });
-
-console.log(inputs);
 map.addEventListener("tap", (e) => {
-    var coords = map.screenToGeo(
+    let coords = map.screenToGeo(
         e.currentPointer.viewportX,
         e.currentPointer.viewportY
     );
@@ -45,10 +46,14 @@ map.addEventListener("tap", (e) => {
     markers[currentClick].setGeometry(coords);
     map.addObject(markers[currentClick]);
     if (currentClick == 0) {
-        inputs[1].value = coords.lat;
-        inputs[2].value = coords.lng;
+        inputs[2].value = coords.lat;
+        inputs[3].value = coords.lng;
     } else {
-        inputs[3].value = coords.lat;
-        inputs[4].value = coords.lng;
+        inputs[5].value = coords.lat;
+        inputs[6].value = coords.lng;
     }
+    service.reverseGeocode({ at: `${coords.lat},${coords.lng}` }, (result) => {
+        cityNames[currentClick].value =
+            result.items[0].address.city || result.items.title.split(",")[0];
+    });
 });

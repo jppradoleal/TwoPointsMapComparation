@@ -25,15 +25,18 @@ form {
         background-color: rgba(0, 0, 0, 0.7);
         padding: 10px 20px;
         border-radius: 5px;
-        color: white;
+        color: whitesmoke;
         hr {
-            border: 1px solid white;
+            border: 1px solid whitesmoke;
             margin: 15px 0;
         }
         fieldset {
             background-color: rgba(0, 0, 0, 0);
             padding: 0;
-            p {
+            input.cityName {
+                background: none;
+                color: whitesmoke;
+                padding: 0;
                 font-size: 1.5rem;
                 margin-bottom: -10px;
             }
@@ -43,7 +46,7 @@ form {
                 margin-top: 15px;
             }
             font-weight: 300;
-            color: white;
+            color: whitesmoke;
             font-size: large;
         }
         input {
@@ -55,11 +58,16 @@ form {
                 -webkit-appearance: none;
                 margin: 0;
             }
-            padding: 5px 5px;
             &:not(:first-child) {
                 margin-bottom: 5px;
             }
+            &.cityName {
+                color: whitesmoke;
+            }
+            color: #333;
+            padding: 5px 5px;
             border-radius: 5px;
+            font-size: 1.1rem;
         }
     }
 
@@ -67,7 +75,7 @@ form {
         padding: 5px 25px;
         margin-left: auto;
         margin-top: 25px;
-        margin-bottom: 25px;
+        margin-bottom: 0;
         border-radius: 5px;
     }
 }
