@@ -73,7 +73,7 @@ Route::post('/', function (Request $request) {
     $d = round(($R * $c) / 1e3, 2);
 
     $dbData['distance'] = $d;
-    $searchInfo = tap(new \App\SearchInfo($dbData))->save();
+    // $searchInfo = tap(new \App\SearchInfo($dbData))->save();
 
     unset($data['first_city_latlng']);
     unset($data['second_city_latlng']);
