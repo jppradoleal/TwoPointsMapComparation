@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 @section('title', 'Distance Calculation')
 @section('head_links')
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
 @endsection
 @section('content')
 <form method="POST">
@@ -31,5 +31,5 @@
 </form>
 
 <div id="map"></div>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ secure_asset('js/app.js') }}"></script>
 @endsection
